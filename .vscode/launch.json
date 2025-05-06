@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Ejecutar Taller6",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/output/main.exe",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "console": "externalTerminal"
+      }
+    ]
+  }
+  

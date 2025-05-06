@@ -1,26 +1,26 @@
 {
     "version": "2.0.0",
     "tasks": [
-        {
-            "type": "cppbuild",
-            "label": "C/C++: gcc.exe build active file",
-            "command": "C:\\mingw\\mingw64\\bin\\gcc.exe",
-            "args": [
-                "-fdiagnostics-color=always",
-                "-g",
-                "${fileDirname}\\main.c",
-                "${fileDirname}\\inventario.c",
-                "-o",
-                "${fileDirname}\\output\\main.exe"
-            ],
-            "options": {
-                "cwd": "${fileDirname}"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": "build",
-            "detail": "compiler: C:\\mingw\\mingw64\\bin\\gcc.exe"
-        }
+      {
+        "label": "Compilar proyecto Taller6",
+        "type": "shell",
+        "command": "gcc",
+        "args": [
+          "-Wall",
+          "-Wextra",
+          "-g",
+          "main.c",
+          "inventario.c",
+          "-o",
+          "output/main.exe"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": ["$gcc"],
+        "detail": "Compila main.c e inventario.c y genera main.exe"
+      }
     ]
-}
+  }
+  
