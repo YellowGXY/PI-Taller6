@@ -11,6 +11,7 @@
         "-g",
         "main.c",
         "funciones.c",
+        "funciones.h",
         "-o",
         "output/main.exe"
       ],
