@@ -1,0 +1,9 @@
+int ingresarDatos(char nombres[][30], float precios[]);
+int agregarProductos(char nombres[][30], float precios[], int cantidadActual, int n);
+float calcularTotal(float precios[], int cantidad);
+float calcularPromedio(float precios[], int cantidad);
+int encontrarMasCaro(float precios[], int cantidad);
+int encontrarMasBarato(float precios[], int cantidad);
+void buscarProducto(char nombres[][30], float precios[], int cantidad);
+void mostrarInventario(char nombres[][30], float precios[], int cantidad);
+void mostrarMenu();

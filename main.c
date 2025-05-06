@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "inventario.h"
+#include "funciones.h"
 
 int main() {
     char nombres[10][30] = {"", "", "", "", "", "", "", "", "", ""};
