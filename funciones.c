@@ -33,8 +33,8 @@ int ingresarDatos(char nombres[][30], float precios[]) {
     
     do {
         val = scanf("%d", &n);
+        while (getchar() != '\n');
         if (val != 1 || n < 1 || n > espacioDisponible) {
-            while (getchar() != '\n');
             printf("Cantidad invalida. Ingrese un numero entre 1 y %d: ", espacioDisponible);
         }
     } while (val != 1 || n < 1 || n > espacioDisponible);
@@ -47,11 +47,13 @@ int ingresarDatos(char nombres[][30], float precios[]) {
         do {
             nombreDuplicado = 0;
             printf("  Nombre: ");
-            while (getchar() != '\n'); 
             fgets(nombres[idx], 30, stdin);
-            len = strlen(nombres[idx]) - 1;
-            if (nombres[idx][len] == '\n'){
-                nombres[idx][len] = '\0';
+            len = strlen(nombres[idx]);
+            if (len > 0 && nombres[idx][len - 1] == '\n')
+                nombres[idx][len - 1] = '\0';
+            else {
+                int ch;
+                while ((ch = getchar()) != '\n' && ch != EOF);
             }
 
             for (int j = 0; j < cantidadActual + i; j++) {
