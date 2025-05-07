@@ -10,8 +10,8 @@
         "-Wextra",
         "-g",
         "main.c",
-        "funciones.c",
-        "funciones.h",
+        "inventario.c",
+        "inventario.h",
         "-o",
         "output/main.exe"
       ],
