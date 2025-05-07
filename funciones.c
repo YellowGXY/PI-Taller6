@@ -49,13 +49,16 @@ int ingresarDatos(char nombres[][30], float precios[]) {
             printf("  Nombre: ");
             fgets(nombres[idx], 30, stdin);
             len = strlen(nombres[idx]);
-            if (len > 0 && nombres[idx][len - 1] == '\n')
+            
+            if (len > 0 && nombres[idx][len - 1] == '\n') {
                 nombres[idx][len - 1] = '\0';
-            else {
-                int ch;
-                while ((ch = getchar()) != '\n' && ch != EOF);
+            } else {
+                char ch;
+                do {
+                    ch = getchar();
+                } while (ch != '\n');
             }
-
+        
             for (int j = 0; j < cantidadActual + i; j++) {
                 if (strcmp(nombres[j], nombres[idx]) == 0) {
                     printf("  Ese nombre ya fue ingresado. Ingrese otro.\n");
@@ -64,7 +67,6 @@ int ingresarDatos(char nombres[][30], float precios[]) {
                 }
             }
         } while (nombreDuplicado);
-
 
         printf("  Precio: ");
         do {
