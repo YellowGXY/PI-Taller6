@@ -1,24 +1,35 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "Compilar C",
-        "type": "shell",
-        "command": "gcc",
-        "args": [
-          "-g",
-          "main.c",
-          "funciones.c",
-          "-o",
-          "output/main.exe"
-        ],
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        },
-        "problemMatcher": ["$gcc"],
-        "detail": "Compila main.c y funciones.c"
-      }
-    ]
-  }
-  
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Crear carpeta output",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "if not exist output mkdir output"
+      ],
+      "problemMatcher": [],
+      "detail": "Crea carpeta output si no existe"
+    },
+    {
+      "label": "Compilar C",
+      "type": "shell",
+      "command": "gcc",
+      "args": [
+        "-g",
+        "main.c",
+        "funciones.c",
+        "-o",
+        "output/main.exe"
+      ],
+      "dependsOn": ["Crear carpeta output"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Compila main.c y funciones.c"
+    }
+  ]
+}

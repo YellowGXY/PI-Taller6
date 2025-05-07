@@ -43,12 +43,26 @@ int ingresarDatos(char nombres[][30], float precios[]) {
         int idx = cantidadActual + i;
         printf("\n--- Ingresando producto %d ---\n", idx + 1);
         
-        printf("  Nombre: ");
-        while (getchar() != '\n'); 
-        fgets(nombres[idx], 30, stdin);
-        len = strlen(nombres[idx]) - 1;
-        if (nombres[idx][len] == '\n')
-            nombres[idx][len] = '\0';
+        int nombreDuplicado;
+        do {
+            nombreDuplicado = 0;
+            printf("  Nombre: ");
+            while (getchar() != '\n'); 
+            fgets(nombres[idx], 30, stdin);
+            len = strlen(nombres[idx]) - 1;
+            if (nombres[idx][len] == '\n'){
+                nombres[idx][len] = '\0';
+            }
+
+            for (int j = 0; j < cantidadActual + i; j++) {
+                if (strcmp(nombres[j], nombres[idx]) == 0) {
+                    printf("  Ese nombre ya fue ingresado. Ingrese otro.\n");
+                    nombreDuplicado = 1;
+                    break;
+                }
+            }
+        } while (nombreDuplicado);
+
 
         printf("  Precio: ");
         do {
@@ -94,15 +108,23 @@ int encontrarMasBarato(float precios[], int cantidad) {
 
 void buscarProducto(char nombres[][30], float precios[], int cantidad) {
     char nombreBuscado[50];
-    while (getchar() != '\n');
-    fgets(nombreBuscado, 30, stdin);
-    nombreBuscado[strcspn(nombreBuscado, "\n")] = '\0';  
+    int encontrados = 0;
 
+    printf("\nIngrese nombre o parte del nombre del producto a buscar: ");
+    while (getchar() != '\n'); 
+    fgets(nombreBuscado, 30, stdin);
+    nombreBuscado[strcspn(nombreBuscado, "\n")] = '\0';
+
+    printf("\nCoincidencias encontradas:\n");
     for (int i = 0; i < cantidad; i++) {
-        if (strcmp(nombres[i], nombreBuscado) == 0) {
-            printf("Producto encontrado: %s - Precio: %.2f\n", nombres[i], precios[i]);
-            return;
+        if (strstr(nombres[i], nombreBuscado) != NULL) {
+            printf("  %d. %s - $%.2f\n", i + 1, nombres[i], precios[i]);
+            encontrados++;
         }
     }
-    printf("Producto no encontrado.\n");
+
+    if (encontrados == 0) {
+        printf("No se encontraron productos que coincidan con \"%s\".\n", nombreBuscado);
+    }
 }
+
