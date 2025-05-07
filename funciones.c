@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 
+#define MAX 10
+
 int ingresarDatos(char nombres[][30], float precios[]) {
     int n, len, val;
     int cantidadActual = 0;
 
-    while (cantidadActual < 10 && strlen(nombres[cantidadActual]) > 0) {
+    while (cantidadActual < MAX && strlen(nombres[cantidadActual]) > 0) {
         cantidadActual++;
     }
 
@@ -21,44 +23,54 @@ int ingresarDatos(char nombres[][30], float precios[]) {
         }
     }
 
-    if (cantidadActual >= 10) {
-        printf("\n¡Ya alcanzó el limite de 10 productos!\n");
+    if (cantidadActual >= MAX) {
+        printf("\n¡Ya alcanzó el limite de %d productos!\n", MAX);
         return cantidadActual;
     }
 
-    int espacioDisponible = 10 - cantidadActual;
+    int espacioDisponible = MAX - cantidadActual;
     printf("\n------------------------------------\n");
     printf("Puede ingresar hasta %d producto(s) mas.\n", espacioDisponible);
     printf("Cuantos productos desea agregar ahora? ");
-    
+
     do {
         val = scanf("%d", &n);
         while (getchar() != '\n');
         if (val != 1 || n < 1 || n > espacioDisponible) {
-            printf("Cantidad invalida. Ingrese un numero entre 1 y %d: ", espacioDisponible);
+            printf("Cantidad invalida. Ingrese un número entre 1 y %d: ", espacioDisponible);
         }
     } while (val != 1 || n < 1 || n > espacioDisponible);
 
     for (int i = 0; i < n; i++) {
         int idx = cantidadActual + i;
-        printf("\n--- Ingresando producto %d ---\n", idx + 1);
+        int nombreValido, nombreDuplicado;
         
-        int nombreDuplicado;
         do {
+            nombreValido = 1;
             nombreDuplicado = 0;
+            
+            printf("\n--- Ingresando producto %d ---\n", idx + 1);
             printf("  Nombre: ");
             fgets(nombres[idx], 30, stdin);
+
             len = strlen(nombres[idx]);
-            
             if (len > 0 && nombres[idx][len - 1] == '\n') {
                 nombres[idx][len - 1] = '\0';
             } else {
                 char ch;
-                do {
-                    ch = getchar();
-                } while (ch != '\n');
+                while ((ch = getchar()) != '\n' && ch != EOF);
             }
-        
+
+            if (strlen(nombres[idx]) == 0) {
+                printf("  El nombre no puede estar vacío.\n");
+                nombreValido = 0;
+            }
+
+            if (strchr(nombres[idx], ' ') != NULL) {
+                printf("  El nombre no puede contener espacios.\n");
+                nombreValido = 0;
+            }
+
             for (int j = 0; j < cantidadActual + i; j++) {
                 if (strcmp(nombres[j], nombres[idx]) == 0) {
                     printf("  Ese nombre ya fue ingresado. Ingrese otro.\n");
@@ -66,14 +78,15 @@ int ingresarDatos(char nombres[][30], float precios[]) {
                     break;
                 }
             }
-        } while (nombreDuplicado);
+
+        } while (!nombreValido || nombreDuplicado);
 
         printf("  Precio: ");
         do {
             val = scanf("%f", &precios[idx]);
+            while (getchar() != '\n');
             if (val != 1 || precios[idx] < 0) {
-                while (getchar() != '\n');
-                printf("  Precio invalido. Ingrese un valor positivo: ");
+                printf("  Precio inválido. Ingrese un valor positivo: ");
             }
         } while (val != 1 || precios[idx] < 0);
     }
@@ -82,6 +95,39 @@ int ingresarDatos(char nombres[][30], float precios[]) {
     return cantidadActual + n;
 }
 
+int eliminarProducto(char nombres[][30], float precios[], int cantidad) {
+    if (cantidad == 0) {
+        printf("\nNo hay productos para eliminar.\n");
+        return cantidad;
+    }
+
+    printf("\n--- Lista de productos ---\n");
+    for (int i = 0; i < cantidad; i++) {
+        printf("  %d. %s - $%.2f\n", i + 1, nombres[i], precios[i]);
+    }
+
+    int opcion, val;
+    printf("\nIngrese el número del producto que desea eliminar (1 a %d): ", cantidad);
+    do {
+        val = scanf("%d", &opcion);
+        while (getchar() != '\n');
+        if (val != 1 || opcion < 1 || opcion > cantidad) {
+            printf("Entrada inválida. Intente nuevamente: ");
+        }
+    } while (val != 1 || opcion < 1 || opcion > cantidad);
+
+    int idx = opcion - 1;
+    for (int i = idx; i < cantidad - 1; i++) {
+        strcpy(nombres[i], nombres[i + 1]);
+        precios[i] = precios[i + 1];
+    }
+
+    nombres[cantidad - 1][0] = '\0';
+    precios[cantidad - 1] = 0;
+
+    printf(">>> Producto eliminado exitosamente.\n");
+    return cantidad - 1;
+}
 
 float calcularTotal(float precios[], int cantidad) {
     float total = 0;
@@ -91,7 +137,7 @@ float calcularTotal(float precios[], int cantidad) {
 }
 
 float calcularPromedio(float precios[], int cantidad) {
-    return calcularTotal(precios, cantidad) / cantidad;
+    return (cantidad > 0) ? calcularTotal(precios, cantidad) / cantidad : 0;
 }
 
 int encontrarMasCaro(float precios[], int cantidad) {
@@ -111,11 +157,10 @@ int encontrarMasBarato(float precios[], int cantidad) {
 }
 
 void buscarProducto(char nombres[][30], float precios[], int cantidad) {
-    char nombreBuscado[50];
+    char nombreBuscado[30];
     int encontrados = 0;
 
     printf("\nIngrese nombre o parte del nombre del producto a buscar: ");
-    while (getchar() != '\n'); 
     fgets(nombreBuscado, 30, stdin);
     nombreBuscado[strcspn(nombreBuscado, "\n")] = '\0';
 
@@ -131,4 +176,3 @@ void buscarProducto(char nombres[][30], float precios[], int cantidad) {
         printf("No se encontraron productos que coincidan con \"%s\".\n", nombreBuscado);
     }
 }
-

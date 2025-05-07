@@ -1,5 +1,6 @@
 int ingresarDatos(char nombres[][30], float precios[]);
 int agregarProductos(char nombres[][30], float precios[], int cantidadActual, int n);
+int eliminarProducto(char nombres[][30], float precios[], int cantidad);
 float calcularTotal(float precios[], int cantidad);
 float calcularPromedio(float precios[], int cantidad);
 int encontrarMasCaro(float precios[], int cantidad);
