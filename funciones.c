@@ -37,7 +37,7 @@ int ingresarDatos(char nombres[][30], float precios[]) {
         val = scanf("%d", &n);
         while (getchar() != '\n');
         if (val != 1 || n < 1 || n > espacioDisponible) {
-            printf("Cantidad invalida. Ingrese un número entre 1 y %d: ", espacioDisponible);
+            printf("Cantidad invalida. Ingrese un numero entre 1 y %d: ", espacioDisponible);
         }
     } while (val != 1 || n < 1 || n > espacioDisponible);
 
@@ -62,7 +62,7 @@ int ingresarDatos(char nombres[][30], float precios[]) {
             }
 
             if (strlen(nombres[idx]) == 0) {
-                printf("  El nombre no puede estar vacío.\n");
+                printf("  El nombre no puede estar vacio.\n");
                 nombreValido = 0;
             }
 
@@ -96,10 +96,6 @@ int ingresarDatos(char nombres[][30], float precios[]) {
 }
 
 int eliminarProducto(char nombres[][30], float precios[], int cantidad) {
-    if (cantidad == 0) {
-        printf("\nNo hay productos para eliminar.\n");
-        return cantidad;
-    }
 
     printf("\n--- Lista de productos ---\n");
     for (int i = 0; i < cantidad; i++) {
@@ -107,7 +103,7 @@ int eliminarProducto(char nombres[][30], float precios[], int cantidad) {
     }
 
     int opcion, val;
-    printf("\nIngrese el número del producto que desea eliminar (1 a %d): ", cantidad);
+    printf("\nIngrese el numero del producto que desea eliminar (1 a %d): ", cantidad);
     do {
         val = scanf("%d", &opcion);
         while (getchar() != '\n');

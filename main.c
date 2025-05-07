@@ -72,7 +72,7 @@ int main() {
                 break;
             case 7:
                 if (cantidad > 0){
-                    eliminarProducto(nombres, precios, cantidad);
+                    cantidad = eliminarProducto(nombres, precios, cantidad);
                 }else{
                     printf("Debe ingresar los datos primero.\n");
                 }
