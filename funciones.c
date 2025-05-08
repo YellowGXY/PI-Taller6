@@ -154,7 +154,7 @@ int encontrarMasBarato(float precios[], int cantidad) {
     return minIndex;
 }
 
-void buscarProducto(char nombres[][30], float precios[], int cantidad) {
+void buscarProducto(char nombres[][30], float precios[], int cantidad){
     char nombreBuscado[30];
     int encontrados = 0;
 
@@ -195,3 +195,4 @@ void buscarProducto(char nombres[][30], float precios[], int cantidad) {
     if (encontrados == 0) {
         printf("No se encontraron productos que coincidan con \"%s\".\n", nombreBuscado);
     }
+}
