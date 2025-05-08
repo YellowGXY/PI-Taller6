@@ -24,7 +24,7 @@ int ingresarDatos(char nombres[][30], float precios[]) {
     }
 
     if (cantidadActual >= MAX) {
-        printf("\n¡Ya alcanzó el limite de %d productos!\n", MAX);
+        printf("\n¡Ya alcanzo el limite de %d productos!\n", MAX);
         return cantidadActual;
     }
 
@@ -88,7 +88,7 @@ int ingresarDatos(char nombres[][30], float precios[]) {
             val = scanf("%f", &precios[idx]);
             while (getchar() != '\n');
             if (val != 1 || precios[idx] < 0) {
-                printf("  Precio inválido. Ingrese un valor positivo: ");
+                printf("  Precio invalido. Ingrese un valor positivo: ");
             }
         } while (val != 1 || precios[idx] < 0);
     }
@@ -110,7 +110,7 @@ int eliminarProducto(char nombres[][30], float precios[], int cantidad) {
         val = scanf("%d", &opcion);
         while (getchar() != '\n');
         if (val != 1 || opcion < 1 || opcion > cantidad) {
-            printf("Entrada inválida. Intente nuevamente: ");
+            printf("Entrada invalida. Intente nuevamente: ");
         }
     } while (val != 1 || opcion < 1 || opcion > cantidad);
 
@@ -135,7 +135,11 @@ float calcularTotal(float precios[], int cantidad) {
 }
 
 float calcularPromedio(float precios[], int cantidad) {
-    return (cantidad > 0) ? calcularTotal(precios, cantidad) / cantidad : 0;
+    if (cantidad > 0) {
+        return calcularTotal(precios, cantidad) / cantidad;
+    } else {
+        return 0;
+    }
 }
 
 int encontrarMasCaro(float precios[], int cantidad) {
