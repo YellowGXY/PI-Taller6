@@ -58,22 +58,19 @@ int ingresarDatos(char nombres[][30], float precios[]) {
                 nombres[idx][len - 1] = '\0';
             }
             
-            if (strlen(nombres[idx]) == 0) {
-                printf("  El nombre no puede estar vacio.\n");
-                nombreValido = 0;
-            }
-            
-            int tieneEspacio = 0;
+            int soloEspacios = 1;
             for (int k = 0; nombres[idx][k] != '\0'; k++) {
-                if (nombres[idx][k] == ' ') {
-                    tieneEspacio = 1;
+                if (nombres[idx][k] != ' ') {
+                    soloEspacios = 0;
                     break;
                 }
             }
-            if (tieneEspacio) {
-                printf("  El nombre no puede contener espacios.\n");
+
+            if (strlen(nombres[idx]) == 0 || soloEspacios) {
+                printf("  El nombre no puede estar vacio o lleno solo de espacios.\n");
                 nombreValido = 0;
             }
+
             
             for (int j = 0; j < cantidadActual + i; j++) {
                 if (strcmp(nombres[j], nombres[idx]) == 0) {
@@ -198,4 +195,3 @@ void buscarProducto(char nombres[][30], float precios[], int cantidad) {
     if (encontrados == 0) {
         printf("No se encontraron productos que coincidan con \"%s\".\n", nombreBuscado);
     }
-}
