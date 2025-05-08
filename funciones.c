@@ -56,21 +56,25 @@ int ingresarDatos(char nombres[][30], float precios[]) {
             len = strlen(nombres[idx]);
             if (len > 0 && nombres[idx][len - 1] == '\n') {
                 nombres[idx][len - 1] = '\0';
-            } else {
-                char ch;
-                while ((ch = getchar()) != '\n' && ch != EOF);
             }
-
+            
             if (strlen(nombres[idx]) == 0) {
                 printf("  El nombre no puede estar vacio.\n");
                 nombreValido = 0;
             }
-
-            if (strchr(nombres[idx], ' ') != NULL) {
+            
+            int tieneEspacio = 0;
+            for (int k = 0; nombres[idx][k] != '\0'; k++) {
+                if (nombres[idx][k] == ' ') {
+                    tieneEspacio = 1;
+                    break;
+                }
+            }
+            if (tieneEspacio) {
                 printf("  El nombre no puede contener espacios.\n");
                 nombreValido = 0;
             }
-
+            
             for (int j = 0; j < cantidadActual + i; j++) {
                 if (strcmp(nombres[j], nombres[idx]) == 0) {
                     printf("  Ese nombre ya fue ingresado. Ingrese otro.\n");
@@ -78,6 +82,7 @@ int ingresarDatos(char nombres[][30], float precios[]) {
                     break;
                 }
             }
+            
 
         } while (!nombreValido || nombreDuplicado);
 
@@ -158,11 +163,33 @@ void buscarProducto(char nombres[][30], float precios[], int cantidad) {
 
     printf("\nIngrese nombre o parte del nombre del producto a buscar: ");
     fgets(nombreBuscado, 30, stdin);
-    nombreBuscado[strcspn(nombreBuscado, "\n")] = '\0';
+    nombreBuscado[strcspn(nombreBuscado, "\n")] = '\0'; 
 
     printf("\nCoincidencias encontradas:\n");
     for (int i = 0; i < cantidad; i++) {
-        if (strstr(nombres[i], nombreBuscado) != NULL) {
+        int lenCadena = 0;
+        while (nombres[i][lenCadena] != '\0') {
+            lenCadena++;
+        }
+
+        int lenBusqueda = 0;
+        while (nombreBuscado[lenBusqueda] != '\0') {
+            lenBusqueda++;
+        }
+
+        int encontrada = 0;
+        for (int j = 0; j <= lenCadena - lenBusqueda; j++) {
+            int k = 0;
+            while (k < lenBusqueda && nombres[i][j + k] == nombreBuscado[k]) {
+                k++;
+            }
+            if (k == lenBusqueda) {
+                encontrada = 1;
+                break;
+            }
+        }
+
+        if (encontrada) {
             printf("  %d. %s - $%.2f\n", i + 1, nombres[i], precios[i]);
             encontrados++;
         }
